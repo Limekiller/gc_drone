@@ -1,0 +1,18 @@
+input_type,input_description,input_state,voltage
+switch,,on,5v
+button,turn on + land,rest,3.4v
+button,turn on + land,pushed,0v
+joystick,up + down,rest,1.7v
+joystick,up + down,up,3.4v
+joystick,up + down,down,0v
+joystick,rotate left + rotate right,rest,1.7v
+joystick,rotate left + rotate right,right,3.4v
+joystick,rotate left + rotate right,left,0v
+joystick,forward + backward,rest,1.7v
+joystick,forward + backward,up,3.4v
+joystick,forward + backward,down,0v
+joystick,left + right,rest,1.7v
+joystick,left + right,right,3.4v
+joystick,left + right,left,0v
+button,360 flip,rest,3.4v
+button,360 flip,rest,0v
