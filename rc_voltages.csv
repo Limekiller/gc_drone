@@ -15,4 +15,4 @@ joystick,left + right,rest,1.7v
 joystick,left + right,right,3.4v
 joystick,left + right,left,0v
 button,360 flip,rest,3.4v
-button,360 flip,rest,0v
+button,360 flip,pushed,0v
