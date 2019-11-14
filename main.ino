@@ -14,12 +14,28 @@ void setup() {
   pinMode(LJUD, OUTPUT);
   pinMode(PAIR, OUTPUT);
   Serial.begin(9600);
+  digitalWrite(ON, HIGH);
 }
 
 void loop() {
-  pair();
-  start();  
-  stabilize(LJUD);
+  //pair();
+  if (Serial.available() > 0) {
+    int volt = Serial.read();
+    if (volt == 1) {
+      start();
+      flying = true;
+    }
+    else if (volt == 2) {
+      analogWrite(LJUD, 135);
+    }
+    else if (volt == 3) {
+      analogWrite(LJUD, 100);
+      delay(2);
+    } else {
+      stabilize(LJUD);
+    }
+  }
+  //start();  
 }
 
 void pair() {
@@ -35,9 +51,9 @@ void pair() {
 
 void start() {
   if (!propellersOn) {
-    analogWrite(LJUD, 135);
     digitalWrite(ON, LOW);
-    propellersOn = true;
+    delay(200);
+    //propellersOn = true;
     delay(200);
     digitalWrite(ON, HIGH);
     delay(200);
