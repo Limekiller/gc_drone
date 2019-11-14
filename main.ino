@@ -1,43 +1,52 @@
-// store pin numbers
-int BUTTON = 1;
-int ON = A3;
-int LJUD = A2;
+// digital pins
+int ON = 6;
+
+// analog pins
+int PAIR = A5;
+int LJUD = A4;
+
 boolean paired = false;
 boolean flying = false;
+boolean propellersOn = false;
 
 void setup() {
-  pinMode(2, INPUT);
-  pinMode(3, INPUT);
+  pinMode(ON, OUTPUT);
+  pinMode(LJUD, OUTPUT);
+  pinMode(PAIR, OUTPUT);
   Serial.begin(9600);
 }
 
 void loop() {
-  Serial.println(digitalRead(2));
-  if (digitalRead(2) == 1) {
-    sequence();
-    flying = true;
-  } else if (digitalRead(3) == 1) {
-    pair();
-  } else if (paired && flying) {
-    flying = false;
-    analogWrite(LJUD, 100);
-    delay(5000);
-    analogWrite(LJUD, 0);
-  }
+  pair();
+  start();  
+  stabilize(LJUD);
 }
 
 void pair() {
-  analogWrite(LJUD, 255);
-  delay(100);
-  analogWrite(LJUD, 100); 
-  delay(100);
-  paired = true;
+  if (!paired) {
+    analogWrite(PAIR, 255);
+    delay(1);
+    analogWrite(PAIR, 0);
+    paired = true;
+    delay(100);
+    pinMode(PAIR, INPUT);
+  }
 }
 
-void sequence() {    
-  analogWrite(ON, 0);
-  analogWrite(LJUD, 150);
-  delay(1200);
-  analogWrite(LJUD, 100);
-  delay(1200);
+void start() {
+  if (!propellersOn) {
+    analogWrite(LJUD, 135);
+    digitalWrite(ON, LOW);
+    propellersOn = true;
+    delay(200);
+    digitalWrite(ON, HIGH);
+    delay(200);
+  }
+}
+
+void stabilize(int pin) {
+  analogWrite(pin, 127);
+  delay(2);
+  analogWrite(pin, 128);
+  delay(2);
 }
